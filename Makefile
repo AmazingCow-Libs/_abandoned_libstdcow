@@ -50,7 +50,8 @@ clean:
 obj:
 	mkdir -p ./obj
 
-	gcc -c src/*.c
+	gcc -c -I./include/ \
+	        src/*.c
 
 	mv *.o ./obj/
 
@@ -58,8 +59,8 @@ obj:
 bin:
 	mkdir -p ./bin
 
-	g++ -std=c++11 -D AMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED \
+	cpp -E -std=c++11 -D AMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED \
 	                     -I./include/                            \
-	                     ./libstd/*.c                            \
+	                     ./src/*.c                               \
 	                     ./test/*.c                              \
 	                     -o ./bin/test

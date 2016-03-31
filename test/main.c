@@ -47,20 +47,32 @@
 #ifdef AMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED
 
 #include "stdcow.h"
+#include "cowmalloc.h"
 #include <stdio.h>
 #include <assert.h>
+#include <limits.h>
 
 int main(int argc, const char * argv[])
 {
-    int value  = cow_atoi("-0xFF");
-    int value2 = cow_atoi("400");
-    int value3;
-    cow_atoi_checked("0xaAa", &value3);
+//    int value  = cow_atoi("-0xFF");
+//    int value2 = cow_atoi("400");
+//    int value3;
+//    cow_atoi_checked("0xaAa", &value3);
+//
+//    printf("value : %d\n", value);
+//    printf("value2: %d\n", value2);
+//    printf("value3: %d\n", value3);
 
-    printf("value : %d\n", value);
-    printf("value2: %d\n", value2);
-    printf("value3: %d\n", value3);
 
+    const char str1[2];
+    cow_itoa_out(-245, str1);
+
+    const char *str2 = cow_itoa(234);
+
+    printf("str1 %s", str1);
+    printf("str2 %s", str2);
+
+    COW_FREE_NULL(str2);
 
     return 0;
 }

@@ -17,9 +17,19 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="../include/cowassert.h" />
+		<Unit filename="../include/cowmalloc.h" />
+		<Unit filename="../include/stdcow.h" />
+		<Unit filename="../src/cowassert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/stdcow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../test/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

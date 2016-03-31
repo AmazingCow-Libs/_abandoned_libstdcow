@@ -3,3 +3,5 @@
 ./obj
 ./codeblocks/bin
 ./codeblocks/obj
+codeblocks/bin/*
+codeblocks/obj/*

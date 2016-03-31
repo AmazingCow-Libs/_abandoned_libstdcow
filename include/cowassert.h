@@ -43,7 +43,7 @@
 
 /*******************************************************************************
 * Macros                                                                       *
-/******************************************************************************/
+*******************************************************************************/
 /* NDEBUG is defined - We're on RELEASE mode. */
 #ifdef NDEBUG
     #define COW_ASSERT(_cond_, _msg_) do {} while(0);
@@ -52,18 +52,18 @@
 /* NDEBUG is not defined - We're on DEBUG mode. */
 #else
     /* Function prototype */
-    _cow_assert_print(const char   *expr,
-                      const char   *file,
-                      unsigned int line,
-                      const char   *func,
-                      const char   *msg);
-
-    _cow_assert_print_args(const char   *expr,
+    void _cow_assert_print(const char   *expr,
                            const char   *file,
                            unsigned int line,
                            const char   *func,
-                           const char   *msg,
-                           ...);
+                           const char   *msg);
+
+    void _cow_assert_print_args(const char   *expr,
+                                const char   *file,
+                                unsigned int line,
+                                const char   *func,
+                                const char   *msg,
+                                ...);
 
     /* Macro definition */
     #define COW_ASSERT(_cond_, _msg_) \

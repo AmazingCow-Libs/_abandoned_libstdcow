@@ -43,24 +43,25 @@
 /* std */
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* Function Definitions */
-_cow_assert_print(const char  *expr,
-                  const char  *file,
-                  unsigned int line,
-                  const char  *func,
-                  const char  *msg)
+void _cow_assert_print(const char  *expr,
+                       const char  *file,
+                       unsigned int line,
+                       const char  *func,
+                       const char  *msg)
 {
     _cow_assert_print_args(expr, file, line, func, msg);
 }
 
-_cow_assert_print_args(const char  *expr,
-                       const char  *file,
-                       unsigned int line,
-                       const char  *func,
-                       const char   *msg,
-                       ...)
+void _cow_assert_print_args(const char  *expr,
+                            const char  *file,
+                            unsigned int line,
+                            const char  *func,
+                            const char   *msg,
+                            ...)
 {
     const int k_buffer_size = 1024;
     char buffer[k_buffer_size];

@@ -41,7 +41,17 @@
 #ifndef __libstdcow_include_stdcow_h__
 #define __libstdcow_include_stdcow_h__
 
+/*******************************************************************************
+* ato(X) Functions                                                             *
+*******************************************************************************/
 int cow_atoi(const char *str);
 int cow_atoi_checked(const char *str, int *value_ptr);
+
+
+/*******************************************************************************
+* (X)toa Functions                                                             *
+*******************************************************************************/
+const char* cow_itoa(int i);
+void cow_itoa_out(int i, const char *str_ptr);
 
 #endif /* defined(__libstdcow_include_stdcow_h__) */

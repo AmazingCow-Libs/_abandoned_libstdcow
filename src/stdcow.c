@@ -42,12 +42,18 @@
 #include "stdcow.h"
 /* libstdcow */
 #include "cowassert.h"
+#include "cowmalloc.h"
 /* std */
 #include <assert.h>
 #include <ctype.h>
+#include <limits.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 
+/*******************************************************************************
+* ato(X) Functions                                                             *
+*******************************************************************************/
 int cow_atoi(const char *str)
 {
     int  sign  = 1; /* Assume positive */
@@ -72,7 +78,7 @@ int cow_atoi(const char *str)
         str += 2;
         c = *str;
 
-        while(c != NULL)
+        while(c != '\0')
         {
             c = toupper(c);
 
@@ -93,7 +99,7 @@ int cow_atoi(const char *str)
 
     /* Test for decimal string */
     c = *str;
-    while(c != NULL)
+    while(c != '\0')
     {
         COW_ASSERT_ARGS((c >= '0' && c <= '9'),
                          "Invalid character found '%c'", c);
@@ -133,7 +139,7 @@ int cow_atoi_checked(const char *str, int *value_ptr)
         str += 2;
         c = *str;
 
-        while(c != NULL)
+        while(c != '\0')
         {
             c = toupper(c);
 
@@ -153,7 +159,7 @@ int cow_atoi_checked(const char *str, int *value_ptr)
 
     /* Test for decimal string */
     c = *str;
-    while(c != NULL)
+    while(c != '\0')
     {
         COW_ASSERT_ARGS((c >= '0' && c <= '9'),
                          "Invalid character found '%c'", c);
@@ -168,4 +174,34 @@ int cow_atoi_checked(const char *str, int *value_ptr)
 
     *value_ptr = value * sign;
     return 1; /* True */
+}
+
+
+
+/*******************************************************************************
+* (X)toa Functions                                                             *
+*******************************************************************************/
+const char* cow_itoa(int i)
+{
+    /* COWTODO: This is a very, very ugly way to
+       get how many digits the INT_MAX has, but
+       for now it is what we have */
+    /* COWHACK: Change to a performatic way */
+    static int d = 0;
+    static int v = INT_MAX;
+    if(d == 0)
+        while((v /= 10)) ++d;
+
+    char *str = COW_MALLOC(sizeof(char) * d + 2); /* Sign + NULL char */
+    sprintf(str, "%d", i);
+
+    return str;
+}
+
+void cow_itoa_out(int i, const char *str_ptr)
+{
+    /* COWTODO: Should we check if length of str_ptr is enough?? */
+
+    COW_ASSERT(str_ptr != NULL, "str_ptr cannot be null");
+    sprintf((char *)str_ptr, "%d", i);
 }

@@ -48,32 +48,127 @@
 
 #include "stdcow.h"
 #include "cowmalloc.h"
+#include "cowlog.h"
+
 #include <stdio.h>
 #include <assert.h>
 #include <limits.h>
 
 int main(int argc, const char * argv[])
 {
-//    int value  = cow_atoi("-0xFF");
-//    int value2 = cow_atoi("400");
-//    int value3;
-//    cow_atoi_checked("0xaAa", &value3);
-//
-//    printf("value : %d\n", value);
-//    printf("value2: %d\n", value2);
-//    printf("value3: %d\n", value3);
+    /*
+    char *str = "...####Mateus####...";
+    char *tstr1 = cow_ltrim(str, '.');
+    char *tstr2 = cow_ltrim(str, '#');
+    char *tstr3 = cow_ltrim(tstr1, '#');
+
+    COW_LOG("%s", str);
+    COW_LOG("%s", tstr1);
+    COW_LOG("%s", tstr2);
+    COW_LOG("%s", tstr3);
+
+    COW_FREE_NULL(tstr1);
+    COW_FREE_NULL(tstr2);
+    COW_FREE_NULL(tstr3);
+    */
+
+    /*
+    char *str = "...####Mateus####...";
+    char *tstr1 = COW_MALLOC(sizeof(char) * 20);
+    char *tstr2 = COW_MALLOC(sizeof(char) * 20);
+    char *tstr3 = COW_MALLOC(sizeof(char) * 20);
 
 
-    const char str1[2];
-    cow_itoa_out(-245, str1);
+    cow_ltrim_out(str,   tstr1, '.');
+    cow_ltrim_out(str,   tstr2, '#');
+    cow_ltrim_out(tstr1, tstr3, '#');
 
-    const char *str2 = cow_itoa(234);
+    COW_LOG("%s", str);
+    COW_LOG("%s", tstr1);
+    COW_LOG("%s", tstr2);
+    COW_LOG("%s", tstr3);
 
-    printf("str1 %s", str1);
-    printf("str2 %s", str2);
+    COW_FREE_NULL(tstr1);
+    COW_FREE_NULL(tstr2);
+    COW_FREE_NULL(tstr3);
+    */
 
-    COW_FREE_NULL(str2);
+    /*
+    char *str = "..##12##..";
+    COW_LOG("%s", str);
 
+    char *tstr1 = cow_rtrim(str, '.');
+    COW_LOG("%s", tstr1);
+
+    char *tstr2 = cow_rtrim(str, '#');
+    COW_LOG("%s", tstr2);
+
+    char *tstr3 = cow_rtrim(tstr1, '#');
+    COW_LOG("%s", tstr3);
+
+    COW_FREE_NULL(tstr1);
+    COW_FREE_NULL(tstr2);
+    COW_FREE_NULL(tstr3);
+    */
+
+    /*
+    char *str = "...####Mateus####...";
+    char *tstr1 = COW_MALLOC(sizeof(char) * 20);
+    char *tstr2 = COW_MALLOC(sizeof(char) * 20);
+    char *tstr3 = COW_MALLOC(sizeof(char) * 20);
+
+
+    cow_rtrim_out(str,   tstr1, '.');
+    cow_rtrim_out(str,   tstr2, '#');
+    cow_rtrim_out(tstr1, tstr3, '#');
+
+    COW_LOG("%s", str);
+    COW_LOG("%s", tstr1);
+    COW_LOG("%s", tstr2);
+    COW_LOG("%s", tstr3);
+
+    COW_FREE_NULL(tstr1);
+    COW_FREE_NULL(tstr2);
+    COW_FREE_NULL(tstr3);
+    */
+
+
+    char *str = "..##12##..";
+    COW_LOG("%s", str);
+
+    char *tstr1 = cow_trim(str, '.');
+    COW_LOG("%s", tstr1);
+
+    char *tstr2 = cow_trim(str, '#');
+    COW_LOG("%s", tstr2);
+
+    char *tstr3 = cow_trim(tstr1, '#');
+    COW_LOG("%s", tstr3);
+
+    COW_FREE_NULL(tstr1);
+    COW_FREE_NULL(tstr2);
+    COW_FREE_NULL(tstr3);
+
+    /*
+    char *str = "...####Mateus####...";
+    char *tstr1 = COW_MALLOC(sizeof(char) * 20);
+    char *tstr2 = COW_MALLOC(sizeof(char) * 20);
+    char *tstr3 = COW_MALLOC(sizeof(char) * 20);
+
+
+    cow_rtrim_out(str,   tstr1, '.');
+    cow_rtrim_out(str,   tstr2, '#');
+    cow_rtrim_out(tstr1, tstr3, '#');
+
+    COW_LOG("%s", str);
+    COW_LOG("%s", tstr1);
+    COW_LOG("%s", tstr2);
+    COW_LOG("%s", tstr3);
+
+    COW_FREE_NULL(tstr1);
+    COW_FREE_NULL(tstr2);
+    COW_FREE_NULL(tstr3);
+    */
     return 0;
 }
 

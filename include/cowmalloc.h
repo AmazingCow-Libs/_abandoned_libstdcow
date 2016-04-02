@@ -50,7 +50,17 @@
 /*******************************************************************************
 * malloc                                                                       *
 *******************************************************************************/
-#define COW_MALLOC(_size_) malloc(_size_);
+#ifdef NDEBUG
+    #define COW_MALLOC(_size_) malloc(_size_);
+#else
+    /* Function Prototypes */
+    void* _cow_malloc(size_t size);
+
+    /* Macros Definitions */
+    #define COW_MALLOC(_size_) \
+        _cow_malloc(_size_);
+
+#endif /* NDEBUG */
 
 
 /*******************************************************************************

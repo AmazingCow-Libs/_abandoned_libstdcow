@@ -45,13 +45,29 @@
 * ato(X) Functions                                                             *
 *******************************************************************************/
 int cow_atoi(const char *str);
-int cow_atoi_checked(const char *str, int *value_ptr);
+int cow_atoi_checked(const char *str, int *value_out);
 
 
 /*******************************************************************************
 * (X)toa Functions                                                             *
 *******************************************************************************/
 const char* cow_itoa(int i);
-void cow_itoa_out(int i, const char *str_ptr);
+void cow_itoa_out(int i, const char *str_out);
+
+
+/*******************************************************************************
+* String Functions                                                             *
+*******************************************************************************/
+/* ltrim */
+const char* cow_ltrim(const char *str, char c);
+void cow_ltrim_out(const char *str, char *str_out, char c);
+
+/* rtrim */
+const char* cow_rtrim(const char *str, char c);
+void cow_rtrim_out(const char *str, char *str_out, char c);
+
+/* trim */
+const char* cow_trim(const char *str, char c);
+void cow_trim_out(const char *str, char *str_out, char c);
 
 #endif /* defined(__libstdcow_include_stdcow_h__) */

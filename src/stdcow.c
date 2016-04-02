@@ -43,6 +43,7 @@
 /* libstdcow */
 #include "cowassert.h"
 #include "cowmalloc.h"
+#include "cowlog.h"
 /* std */
 #include <assert.h>
 #include <ctype.h>
@@ -198,10 +199,84 @@ const char* cow_itoa(int i)
     return str;
 }
 
-void cow_itoa_out(int i, const char *str_ptr)
+void cow_itoa_out(int i, const char *str_out)
 {
-    /* COWTODO: Should we check if length of str_ptr is enough?? */
+    /* COWTODO: Should we check if length of str_out is enough?? */
 
-    COW_ASSERT(str_ptr != NULL, "str_ptr cannot be null");
-    sprintf((char *)str_ptr, "%d", i);
+    COW_ASSERT(str_out != NULL, "str_out cannot be null");
+    sprintf((char *)str_out, "%d", i);
+}
+
+
+/*******************************************************************************
+* String Functions                                                             *
+*******************************************************************************/
+/* ltrim */
+const char* cow_ltrim(const char *str, char c)
+{
+    COW_ASSERT(str != NULL, "str cannot be null");
+
+    while(*str && *str == c && ++str)
+        ; /*Empty body */
+
+    char *trimmed_str = COW_MALLOC(sizeof(char) * strlen(str) + 1);
+    strcpy(trimmed_str, str);
+
+    return trimmed_str;
+}
+void cow_ltrim_out(const char *str, char *str_out, char c)
+{
+    COW_ASSERT(str     != NULL, "str cannot be null");
+    COW_ASSERT(str_out != NULL, "str_out cannot be null");
+
+    while(*str && *str == c && ++str)
+        ; /*Empty body */
+
+    strcpy(str_out, str);
+}
+
+/* rtrim */
+const char* cow_rtrim(const char *str, char c)
+{
+    COW_ASSERT(str != NULL, "str cannot be null");
+
+    char *curr = (str + strlen(str) -1);
+    while(curr != str && *curr == c && --curr)
+        ; /*Empty body */
+    ++curr;
+
+    int s = (curr - str);
+    char *trimmed_str = COW_MALLOC(sizeof(char) * s + 1);
+    memmove(trimmed_str, str, s);
+
+    return trimmed_str;
+}
+void cow_rtrim_out(const char *str, char *str_out, char c)
+{
+    COW_ASSERT(str     != NULL, "str cannot be null");
+    COW_ASSERT(str_out != NULL, "str_out cannot be null");
+
+    char *curr = (str + strlen(str) -1);
+    while(curr != str && *curr == c && --curr)
+        ; /*Empty body */
+    ++curr;
+
+    int s = (curr - str);
+    memmove(str_out, str, s);
+    str_out[s] = '\0';
+}
+
+/* trim */
+const char* cow_trim(const char *str, char c)
+{
+    char *trimmed_str = COW_MALLOC(sizeof(char) * strlen(str) + 1);
+
+    cow_trim_out(str, trimmed_str, c);
+
+    return trimmed_str;
+}
+void cow_trim_out(const char *str, char *str_out, char c)
+{
+    cow_ltrim_out(str, str_out, c);
+    cow_rtrim_out(str_out, str_out, c);
 }

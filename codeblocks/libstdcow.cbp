@@ -23,11 +23,18 @@
 		<Unit filename="../include/cowassert.h" />
 		<Unit filename="../include/cowlog.h" />
 		<Unit filename="../include/cowmalloc.h" />
+		<Unit filename="../include/cowpath.h" />
 		<Unit filename="../include/stdcow.h" />
 		<Unit filename="../src/cowassert.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/cowlog.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/cowmalloc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/cowpath.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/stdcow.c">

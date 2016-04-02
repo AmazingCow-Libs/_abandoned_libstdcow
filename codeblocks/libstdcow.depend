@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1459568073 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/stdcow.c
+1459568394 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/stdcow.c
 	"stdcow.h"
 	"cowassert.h"
 	"cowmalloc.h"
@@ -10,10 +10,11 @@
 	<stdlib.h>
 	<stdio.h>
 
-1459567573 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/test/main.c
+1459580809 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/test/main.c
 	"stdcow.h"
 	"cowmalloc.h"
 	"cowlog.h"
+	"cowpath.h"
 	<stdio.h>
 	<assert.h>
 	<limits.h>
@@ -29,4 +30,17 @@
 	"cowlog.h"
 	<stdlib.h>
 	<stdarg.h>
+
+1459580313 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/cowpath.c
+	"cowpath.h"
+	"cowassert.h"
+	"cowmalloc.h"
+	<limits.h>
+	<stdlib.h>
+	<string.h>
+
+1459579522 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/cowmalloc.c
+	"cowmalloc.h"
+	<stdlib.h>
+	<string.h>
 

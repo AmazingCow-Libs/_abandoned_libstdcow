@@ -1,17 +1,19 @@
 # depslib dependency file v1.0
-1459464270 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/stdcow.c
+1459568073 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/stdcow.c
 	"stdcow.h"
 	"cowassert.h"
 	"cowmalloc.h"
+	"cowlog.h"
 	<assert.h>
 	<ctype.h>
 	<limits.h>
 	<stdlib.h>
 	<stdio.h>
 
-1459464400 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/test/main.c
+1459567573 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/test/main.c
 	"stdcow.h"
 	"cowmalloc.h"
+	"cowlog.h"
 	<stdio.h>
 	<assert.h>
 	<limits.h>
@@ -22,4 +24,9 @@
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+
+1459563788 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/cowlog.c
+	"cowlog.h"
+	<stdlib.h>
+	<stdarg.h>
 

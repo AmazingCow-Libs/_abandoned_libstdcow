@@ -62,7 +62,11 @@ void _cow_log(FILE *f, int flush,
     vsnprintf(buffer, k_buffer_size, fmt, ap);
     va_end(ap);
 
-    fprintf(f, "[%s]: %s\n", prefix, buffer);
+    if(prefix)
+        fprintf(f, "[%s]: %s\n", prefix, buffer);
+    else
+        fprintf(f, "%s\n", buffer);
+
     if(flush)
         fflush(f);
 }

@@ -43,7 +43,6 @@
 *  PREVENT THE HASSLE OF DELETE IT WE ADD A (HOPEFULLY) GUARD TO PREVENT
 *  ACCIDENTAL USAGE.
 */
-
 #ifdef AMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED
 
 #include "stdcow.h"
@@ -57,152 +56,9 @@
 
 int main(int argc, const char * argv[])
 {
-    char *filename;
-    char *ext;
-    int   i = 0;
 
-   /*
-   ~/image1.jpg         -> filename_out(image)     - ext_out(jpg)
-   ~/image2             -> filename_out(image)     - ext_out(NULL)
-   ~/image3.jpg.zip     -> filename_out(image.jpg) - ext_out(.zip)
-   ~/(only the dirname) -> filename_out(~/ (same)) - ext_out(NULL)
-   */
-//    i = cow_splitext("~/image1.png", &filename, &ext);
-//    COW_LOG("Filename: %s - Extension: %s - doti: %d", filename, ext, i);
-//    COW_FREE_NULL(filename);
-//    COW_FREE_NULL(ext);
-//
-//    i = cow_splitext("~/image2", &filename, &ext);
-//    COW_LOG("Filename: %s - Extension: %s - doti: %d", filename, ext, i);
-//    COW_FREE_NULL(filename);
-
-
-    i = cow_splitext("~/image3.jpg.zip", &filename, &ext);
-    COW_LOG("Filename: %s - Extension: %s - doti: %d", filename, ext, i);
-    COW_FREE_NULL(filename);
-    COW_FREE_NULL(ext);
-
-
-    i = cow_splitext("~/", &filename, &ext);
-    COW_LOG("Filename: %s - Extension: %s - doti: %d", filename, ext, i);
-    COW_FREE_NULL(filename);
-
-    return 0;
-    /*
-    char *str = "...####Mateus####...";
-    char *tstr1 = cow_ltrim(str, '.');
-    char *tstr2 = cow_ltrim(str, '#');
-    char *tstr3 = cow_ltrim(tstr1, '#');
-
-    COW_LOG("%s", str);
-    COW_LOG("%s", tstr1);
-    COW_LOG("%s", tstr2);
-    COW_LOG("%s", tstr3);
-
-    COW_FREE_NULL(tstr1);
-    COW_FREE_NULL(tstr2);
-    COW_FREE_NULL(tstr3);
-    */
-
-    /*
-    char *str = "...####Mateus####...";
-    char *tstr1 = COW_MALLOC(sizeof(char) * 20);
-    char *tstr2 = COW_MALLOC(sizeof(char) * 20);
-    char *tstr3 = COW_MALLOC(sizeof(char) * 20);
-
-
-    cow_ltrim_out(str,   tstr1, '.');
-    cow_ltrim_out(str,   tstr2, '#');
-    cow_ltrim_out(tstr1, tstr3, '#');
-
-    COW_LOG("%s", str);
-    COW_LOG("%s", tstr1);
-    COW_LOG("%s", tstr2);
-    COW_LOG("%s", tstr3);
-
-    COW_FREE_NULL(tstr1);
-    COW_FREE_NULL(tstr2);
-    COW_FREE_NULL(tstr3);
-    */
-
-    /*
-    char *str = "..##12##..";
-    COW_LOG("%s", str);
-
-    char *tstr1 = cow_rtrim(str, '.');
-    COW_LOG("%s", tstr1);
-
-    char *tstr2 = cow_rtrim(str, '#');
-    COW_LOG("%s", tstr2);
-
-    char *tstr3 = cow_rtrim(tstr1, '#');
-    COW_LOG("%s", tstr3);
-
-    COW_FREE_NULL(tstr1);
-    COW_FREE_NULL(tstr2);
-    COW_FREE_NULL(tstr3);
-    */
-
-    /*
-    char *str = "...####Mateus####...";
-    char *tstr1 = COW_MALLOC(sizeof(char) * 20);
-    char *tstr2 = COW_MALLOC(sizeof(char) * 20);
-    char *tstr3 = COW_MALLOC(sizeof(char) * 20);
-
-
-    cow_rtrim_out(str,   tstr1, '.');
-    cow_rtrim_out(str,   tstr2, '#');
-    cow_rtrim_out(tstr1, tstr3, '#');
-
-    COW_LOG("%s", str);
-    COW_LOG("%s", tstr1);
-    COW_LOG("%s", tstr2);
-    COW_LOG("%s", tstr3);
-
-    COW_FREE_NULL(tstr1);
-    COW_FREE_NULL(tstr2);
-    COW_FREE_NULL(tstr3);
-    */
-
-    /*
-    char *str = "..##12##..";
-    COW_LOG("%s", str);
-
-    char *tstr1 = cow_trim(str, '.');
-    COW_LOG("%s", tstr1);
-
-    char *tstr2 = cow_trim(str, '#');
-    COW_LOG("%s", tstr2);
-
-    char *tstr3 = cow_trim(tstr1, '#');
-    COW_LOG("%s", tstr3);
-
-    COW_FREE_NULL(tstr1);
-    COW_FREE_NULL(tstr2);
-    COW_FREE_NULL(tstr3);
-    */
-
-    /*
-    char *str = "...####Mateus####...";
-    char *tstr1 = COW_MALLOC(sizeof(char) * 20);
-    char *tstr2 = COW_MALLOC(sizeof(char) * 20);
-    char *tstr3 = COW_MALLOC(sizeof(char) * 20);
-
-
-    cow_rtrim_out(str,   tstr1, '.');
-    cow_rtrim_out(str,   tstr2, '#');
-    cow_rtrim_out(tstr1, tstr3, '#');
-
-    COW_LOG("%s", str);
-    COW_LOG("%s", tstr1);
-    COW_LOG("%s", tstr2);
-    COW_LOG("%s", tstr3);
-
-    COW_FREE_NULL(tstr1);
-    COW_FREE_NULL(tstr2);
-    COW_FREE_NULL(tstr3);
-    */
     return 0;
 }
+
 
 #endif /* AMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED */

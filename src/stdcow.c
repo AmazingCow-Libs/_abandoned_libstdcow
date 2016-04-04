@@ -50,6 +50,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 /*******************************************************************************
@@ -240,7 +241,7 @@ const char* cow_rtrim(const char *str, char c)
 {
     COW_ASSERT(str != NULL, "str cannot be null");
 
-    char *curr = (str + strlen(str) -1);
+    char *curr = ((char *)str + strlen(str) -1);
     while(curr != str && *curr == c && --curr)
         ; /*Empty body */
     ++curr;
@@ -256,7 +257,7 @@ void cow_rtrim_out(const char *str, char *str_out, char c)
     COW_ASSERT(str     != NULL, "str cannot be null");
     COW_ASSERT(str_out != NULL, "str_out cannot be null");
 
-    char *curr = (str + strlen(str) -1);
+    char *curr = ((char *)str + strlen(str) -1);
     while(curr != str && *curr == c && --curr)
         ; /*Empty body */
     ++curr;

@@ -46,8 +46,8 @@
 
 
 /* Function Prototypes */
-_cow_log(FILE *f, int flush,
-         const char *prefix, const char *fmt, ...);
+void _cow_log(FILE *f, int flush,
+              const char *prefix, const char *fmt, ...);
 
 
 /* Macro Definitions */

@@ -43,10 +43,12 @@
 /* std */
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
+
 
 /* Function Prototypes */
-_cow_log(FILE *f, int flush,
-         const char *prefix, const char *fmt, ...)
+void _cow_log(FILE *f, int flush,
+              const char *prefix, const char *fmt, ...)
 {
     const int k_buffer_size = 1024;
     char buffer[k_buffer_size];

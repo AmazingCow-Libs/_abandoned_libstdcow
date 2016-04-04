@@ -56,7 +56,11 @@
 
 int main(int argc, const char * argv[])
 {
+    char *root, *ext;
 
+    int i = cow_path_splitext("../~/teste/", &root, &ext);
+
+    COW_LOG("%s - %s", root, ext);
     return 0;
 }
 

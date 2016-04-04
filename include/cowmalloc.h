@@ -75,12 +75,15 @@
         _ptr_ = NULL;                                       \
     } while(0);
 
-#define COW_SAFE_FREE_NULL(_ptr_)                           \
-    do {                                                    \
-        if(_ptr_)                                           \
-        {                                                   \
-            free(_ptr_);                                    \
-            _ptr_ = NULL;                                   \
-        }                                                   \
+
+#define COW_SAFE_FREE_NULL(_ptr_) \
+    do {                          \
+        if(_ptr_)                 \
+        {                         \
+            free(_ptr_);          \
+            _ptr_ = NULL;         \
+        }                         \
     } while(0);
+
+
 #endif /* __libstdcow_include_cowmalloc_h__ */

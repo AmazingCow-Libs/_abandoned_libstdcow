@@ -42,8 +42,8 @@
 #include "cowpath.h"
 /* stdcow */
 #include "cowassert.h"
-#include "cowmalloc.h"
 #include "cowlog.h"
+#include "cowmalloc.h"
 /* std */
 #include <limits.h>
 #include <stdlib.h>
@@ -122,105 +122,75 @@ void cow_path_split(const char *path,
     strcpy(*tail_out, basename_str);
 }
 
+int find_safe(const char *str, char c)
+{
+    if(!str)
+        return -1;
+
+    char *p = strchr(str, c);
+    return (p) ? (p - str) : -1;
+}
+
+int rfind_safe(const char *str, char c)
+{
+    if(!str)
+        return -1;
+
+    char *p = strrchr(str, c);
+    return (p) ? (p - str) : -1;
+}
+
 int cow_path_splitext(const char *path,
-                      char **filename_out,
+                      char **root_out,
                       char **ext_out)
 {
     COW_ASSERT(path != NULL, "path cannot be NULL");
 
+    char *head_dummy;
+    char *tail;
+
+    cow_path_split(path, &head_dummy, &tail);
+    COW_SAFE_FREE_NULL(head_dummy); /* We never need head */
+
     /* Reset the output args */
-    *filename_out = NULL;
-    *ext_out      = NULL;
+    *root_out = NULL;
+    *ext_out  = NULL;
 
-    /*
+    int first_dot_pos =  find_safe(tail, '.');
+    int last_dot_pos  = rfind_safe(tail, '.');
 
-     because the man of: dirname(3) and basename(3) says..
-
-     These  functions  may  return  pointers  to statically
-     allocated memory which may be overwritten by subsequent calls.
-     Alternatively, they  may return  a  pointer to some part of path,
-     so that the string referred to by path should not be modified or
-     freed until the pointer  returned  by the function is no
-     longer required.
-    */
-    char dirname_cpy [PATH_MAX];
-    char basename_cpy[PATH_MAX];
-
-    strcpy(dirname_cpy, path);
-    strcpy(basename_cpy, path);
-
-    char *dirname_str  = dirname (dirname_cpy);  /* Get the dir  component */
-    char *basename_str = basename(basename_cpy); /* Get the file component */
-
-
-    /* Check if we have a dot (.) */
-    char *dot_ptr = strrchr(basename_str, '.');
-    int   dot_pos = (dot_ptr - basename_str);
-
-
-    /* Calculate the string sizes */
-    int dirname_size  = -1;
-    int basename_size = -1;
-    int ext_size      = -1;
-
-    /* COWTODO: COMMENT */
-    dirname_size = (strcmp(dirname_str, ".") == 0) ? 0 : strlen(dirname_str);
-
-    if(dot_ptr) /* We HAVE a dot (.) */
+    /* The path is only a directory part
+       or the path doesn't  contains a dot (.)  */
+    if(!tail
+       || (first_dot_pos == 0 && first_dot_pos == last_dot_pos)
+       || (last_dot_pos == -1))
     {
-        basename_size = dot_pos;                           /* Up to the dot */
-        ext_size      = strlen(basename_str) - dot_pos -1; /* Do not include the dot */
-    }
-    else  /* We HAVE NOT a dot (.) */
-    {
-        basename_size = strlen(basename_str); /* The whole basename */
-        ext_size      = -1;                   /* Dummy value */
-    }
+        COW_SAFE_FREE_NULL(tail);
 
+        *root_out = COW_MALLOC(sizeof(char) * strlen(path) + 1);
+        strcpy(*root_out, path);
 
-    /* Calculate the size of filename_out string
-       It must take in account the size of dirname, because we must
-       return the complete path excluding only the extension */
-    int filename_out_size = (dirname_size)
-                             ? dirname_size + basename_size + 1 /* The slash char */
-                             : basename_size;
-
-    int copy_offset = 0;
-
-    /* Init the filename_out string
-       1 - Copy the dirname.
-       2 -
-       3 - Copy the "real" filename.
-       4 - Add a null char. */
-    *filename_out = COW_MALLOC(sizeof(char) * filename_out_size + 1);
-    if(dirname_size != 0)
-    {
-        /* 1 */
-        memcpy(*filename_out, dirname_str, dirname_size);
-        /* 2 */
-        memcpy(*filename_out + dirname_size, "/", 1);
-
-        copy_offset = dirname_size + 1;
-    }
-
-    /* 3 */
-    memcpy(*filename_out + copy_offset, /* Offset the dirname */
-            basename_str,
-            basename_size);
-    /* 3 */
-    (*filename_out)[filename_out_size] = '\0';
-
-
-    /* We haven't a dot (.) - We're done here... */
-    if(!dot_ptr)
         return -1;
-
-    /* We have a dot (.) */
-    /* Init the ext_out string */
-    *ext_out = COW_MALLOC(sizeof(char ) * ext_size + 1);
-    memcpy(*ext_out, (dot_ptr + 1), ext_size);
-    (*ext_out)[ext_size] = '\0';
+    }
+    COW_SAFE_FREE_NULL(tail) /* We don't need tail anymore */
 
 
-    return strrchr(path, '.') - path;
+    /* The path contains a filename with a dot
+       let's find it on path */
+    int dot_pos = rfind_safe(path, '.');
+
+    /* Init the root_out */
+    *root_out = COW_MALLOC(sizeof(char) * dot_pos + 1);
+    memcpy(*root_out, path, dot_pos);
+    (*root_out)[dot_pos] = '\0';
+
+    /* Init the ext_out */
+    *ext_out = COW_MALLOC(sizeof(char) * (strlen(path) - dot_pos) + 1);
+    memcpy(*ext_out,
+            path + dot_pos,         /* Offset the path to dot */
+            strlen(path) - dot_pos);
+
+    (*ext_out)[strlen(path) - dot_pos] = '\0';
+
+    return dot_pos;
 }

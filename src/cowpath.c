@@ -43,11 +43,12 @@
 /* stdcow */
 #include "cowassert.h"
 #include "cowmalloc.h"
+#include "cowlog.h"
 /* std */
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <libgen.h>
 
 /* Heavily inspired on python's os.path.splitext */
 /*
@@ -66,19 +67,83 @@ int cow_splitext(const char *path,
     *filename_out = NULL;
     *ext_out      = NULL;
 
-    char *filename = path;
+    /*
+     Create a local copy of dir and filename strings
+     because the man of: dirname(3) and basename(3) says..
 
-    /* Check if we have a dot (.) and calculate the string sizes */
-    char *dot_ptr   = strrchr(filename, '.');
-    int   dot_pos   = (dot_ptr - filename);
+     These  functions  may  return  pointers  to statically
+     allocated memory which may be overwritten by subsequent calls.
+     Alternatively, they  may return  a  pointer to some part of path,
+     so that the string referred to by path should not be modified or
+     freed until the pointer  returned  by the function is no
+     longer required.
+    */
+    char dirname_cpy [PATH_MAX];
+    char basename_cpy[PATH_MAX];
 
-    int fout_size = (dot_ptr) ? dot_pos : (strlen(filename));
-    int eout_size = (dot_ptr) ? strlen(filename) - dot_pos -1 : 0;
+    strcpy(dirname_cpy, path);
+    strcpy(basename_cpy, path);
 
-    /* Init the filename_out string */
-    *filename_out = COW_MALLOC(sizeof(char) * fout_size + 1);
-    memcpy(*filename_out, filename, fout_size);
-    (*filename_out)[fout_size] = '\0';
+    char *dirname_str  = dirname (dirname_cpy);  /* Get the dir  component */
+    char *basename_str = basename(basename_cpy); /* Get the file component */
+
+
+    /* Check if we have a dot (.) */
+    char *dot_ptr = strrchr(basename_str, '.');
+    int   dot_pos = (dot_ptr - basename_str);
+
+
+    /* Calculate the string sizes */
+    int dirname_size  = -1;
+    int basename_size = -1;
+    int ext_size      = -1;
+
+    /* COWTODO: COMMENT */
+    dirname_size = (strcmp(dirname_str, ".") == 0) ? 0 : strlen(dirname_str);
+
+    if(dot_ptr) /* We HAVE a dot (.) */
+    {
+        basename_size = dot_pos;                           /* Up to the dot */
+        ext_size      = strlen(basename_str) - dot_pos -1; /* Do not include the dot */
+    }
+    else  /* We HAVE NOT a dot (.) */
+    {
+        basename_size = strlen(basename_str); /* The whole basename */
+        ext_size      = -1;                   /* Dummy value */
+    }
+
+
+    /* Calculate the size of filename_out string
+       It must take in account the size of dirname, because we must
+       return the complete path excluding only the extension */
+    int filename_out_size = (dirname_size)
+                             ? dirname_size + basename_size + 1 /* The slash char */
+                             : basename_size;
+
+    int copy_offset = 0;
+
+    /* Init the filename_out string
+       1 - Copy the dirname.
+       2 -
+       3 - Copy the "real" filename.
+       4 - Add a null char. */
+    *filename_out = COW_MALLOC(sizeof(char) * filename_out_size + 1);
+    if(dirname_size != 0)
+    {
+        /* 1 */
+        memcpy(*filename_out, dirname_str, dirname_size);
+        /* 2 */
+        memcpy(*filename_out + dirname_size, "/", 1);
+
+        copy_offset = dirname_size + 1;
+    }
+
+    /* 3 */
+    memcpy(*filename_out + copy_offset, /* Offset the dirname */
+            basename_str,
+            basename_size);
+    /* 3 */
+    (*filename_out)[filename_out_size] = '\0';
 
 
     /* We haven't a dot (.) - We're done here... */
@@ -87,10 +152,10 @@ int cow_splitext(const char *path,
 
     /* We have a dot (.) */
     /* Init the ext_out string */
-    *ext_out = COW_MALLOC(sizeof(char ) * eout_size + 1);
-    memcpy(*ext_out, (dot_ptr + 1), eout_size);
-    (*ext_out)[eout_size] = '\0';
+    *ext_out = COW_MALLOC(sizeof(char ) * ext_size + 1);
+    memcpy(*ext_out, (dot_ptr + 1), ext_size);
+    (*ext_out)[ext_size] = '\0';
 
 
-    return (dot_ptr - filename);
+    return strrchr(path, '.') - path;
 }

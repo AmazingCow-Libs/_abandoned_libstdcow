@@ -41,16 +41,43 @@
 #ifndef __libstdcow_include_cowpath_h__
 #define __libstdcow_include_cowpath_h__
 
+
 /*
-    From pydoc os.path.splitext
+    From pydoc os.path.split:
+    Split a pathname.  Returns tuple "(head, tail)" where "tail" is
+    everything after the final slash.  Either part may be empty.
+
+    cow_path_split:
+    Instead of a tuple, this function will set the pointers
+    (head_out and tail_out) - Empty parts will be NULL.
+
+    Memory:
+    The pointers are allocated with malloc(3) - Callers are responsible to
+    free(3) them.
+*/
+void cow_path_split(const char *path,
+                    char **head_out,
+                    char **tail_out);
+
+
+/*
+    From pydoc os.path.splitext:
     Split the extension from a pathname.
 
     Extension is everything from the last dot to the end, ignoring
     leading dots.  Returns "(root, ext)"; ext may be empty.
+
+    cow_path_splitext:
+    Instead of a tuple this function will set the pointers (root_out, ext_out).
+    ext_out may be NULL to indicate that it's empty.
+
+    Memory:
+    The pointers are allocated with malloc(3) - Callers are responsible to
+    free(3) them.
 */
-int cow_splitext(const char *path,
-                 char **filename_out,
-                 char **ext_out);
+int cow_path_splitext(const char *path,
+                      char **root_out,
+                      char **ext_out);
 
 
 #endif /* __libstdcow_include_cowpath_h__ */

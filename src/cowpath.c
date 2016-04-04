@@ -50,16 +50,81 @@
 #include <string.h>
 #include <libgen.h>
 
-/* Heavily inspired on python's os.path.splitext */
-/*
-   ~/image1.jpg         -> filename_out(image)     - ext_out(jpg)
-   ~/image2             -> filename_out(image)     - ext_out(NULL)
-   ~/image3.jpg.zip     -> filename_out(image.jpg) - ext_out(.zip)
-   ~/(only the dirname) -> filename_out(~/ (same)) - ext_out(NULL)
-*/
-int cow_splitext(const char *path,
-                 char **filename_out,
-                 char **ext_out)
+/*******************************************************************************
+* NOTES                                                                        *
+********************************************************************************
+* dirname(3) | basename (3)
+*    These  functions  may  return  pointers  to statically
+*    allocated memory which may be overwritten by subsequent calls.
+*    Alternatively, they  may return  a  pointer to some part of path,
+*    so that the string referred to by path should not be modified or
+*    freed until the pointer  returned  by the function is no
+*    longer required.
+*
+*
+********************************************************************************
+*******************************************************************************/
+
+
+void cow_path_split(const char *path,
+                    char **head_out,
+                    char **tail_out)
+{
+    COW_ASSERT(path != NULL, "path cannot be NULL");
+
+    /* Reset the pointers */
+    *head_out = NULL;
+    *tail_out = NULL;
+
+    int path_str_size = strlen(path);
+
+    /* Empty path - NULL components */
+    if(path_str_size == 0)
+        return;
+
+    /* If the path ends in a slash (/) the tail is empty
+       and head is the path itself */
+    if(path[path_str_size -1] == '/')
+    {
+        int offset = (path_str_size == 1) ? 0 : 1;
+
+        *head_out = COW_MALLOC(sizeof(char) * path_str_size + 1);
+        memcpy(*head_out, path, path_str_size);
+        (*head_out)[path_str_size - offset] = '\0';
+
+        return;
+    }
+
+
+    /* Create a local copy of strings */
+    /* Checkout the notes about dirname(3) and basename(3) */
+    char dirname_local_copy [PATH_MAX];
+    char basename_local_copy[PATH_MAX];
+
+    strcpy(dirname_local_copy,  path);
+    strcpy(basename_local_copy, path);
+
+    /* */
+    char *dirname_str  = dirname (dirname_local_copy);
+    char *basename_str = basename(basename_local_copy);
+
+    /* Init the head */
+    /* Special case for when the there is no slashes */
+    if(strcmp(dirname_str, ".") != 0 || strcmp(basename_str, path) != 0)
+    {
+        *head_out = COW_MALLOC(sizeof(char) * strlen(dirname_str)  + 1);
+        strcpy(*head_out, dirname_str);
+    }
+
+
+    /* Init the tail */
+    *tail_out = COW_MALLOC(sizeof(char) * strlen(basename_str) + 1);
+    strcpy(*tail_out, basename_str);
+}
+
+int cow_path_splitext(const char *path,
+                      char **filename_out,
+                      char **ext_out)
 {
     COW_ASSERT(path != NULL, "path cannot be NULL");
 
@@ -68,7 +133,7 @@ int cow_splitext(const char *path,
     *ext_out      = NULL;
 
     /*
-     Create a local copy of dir and filename strings
+
      because the man of: dirname(3) and basename(3) says..
 
      These  functions  may  return  pointers  to statically

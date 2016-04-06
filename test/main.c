@@ -56,11 +56,11 @@
 
 int main(int argc, const char * argv[])
 {
-    char *root, *ext;
+    int a = 10;
+    int b = 5;
 
-    int i = cow_path_splitext("../~/teste/", &root, &ext);
+    COW_VERIFY(a == b);
 
-    COW_LOG("%s - %s", root, ext);
     return 0;
 }
 

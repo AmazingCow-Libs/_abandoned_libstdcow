@@ -185,8 +185,8 @@ int cow_atoi_checked(const char *str, int *value_ptr)
 *******************************************************************************/
 const char* cow_itoa(int i)
 {
-    /* COWTODO: This is a very, very ugly way to
-       get how many digits the INT_MAX has, but
+    /* COWTODO: This is a very, very ugly way to \
+       get how many digits the INT_MAX has, but  \
        for now it is what we have */
     /* COWHACK: Change to a performatic way */
     static int d = 0;

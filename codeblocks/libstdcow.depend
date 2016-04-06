@@ -53,7 +53,7 @@
 	<stdlib.h>
 	<string.h>
 
-1459772565 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/src/cowlog.c
+1459802588 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/src/cowlog.c
 	"cowlog.h"
 	<stdlib.h>
 	<stdarg.h>
@@ -86,7 +86,7 @@
 	<stdio.h>
 	<string.h>
 
-1459798914 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/test/main.c
+1459963859 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/test/main.c
 	"stdcow.h"
 	"cowmalloc.h"
 	"cowlog.h"
@@ -95,9 +95,9 @@
 	<assert.h>
 	<limits.h>
 
-1459771642 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/cowassert.h
+1459963942 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/cowassert.h
 
-1459772544 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/cowlog.h
+1459802579 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/cowlog.h
 	<stdio.h>
 
 1459787622 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/cowmalloc.h

@@ -41,17 +41,27 @@
 #ifndef __libstdcow_include_cowassert_h__
 #define __libstdcow_include_cowassert_h__
 
+
+/*******************************************************************************
+* Notes                                                                        *
+*******************************************************************************/
+/*
+    COW_VERIFY macro was heavily insipred on the amazing course by
+    Kenny Kerr - @kennykerr - PluralSight Modern C++ Libraries.
+*/
+
+
 /*******************************************************************************
 * Macros                                                                       *
 *******************************************************************************/
 /* NDEBUG is defined - We're on RELEASE mode. */
 #ifdef NDEBUG
     #define COW_ASSERT(_cond_, _msg_) do {} while(0);
-
+    #define COW_VERIFY(_expr_) (_expr_)
 
 /* NDEBUG is not defined - We're on DEBUG mode. */
 #else
-    /* Function prototype */
+    /* Functions prototypes */
     void _cow_assert_print(const char   *expr,
                            const char   *file,
                            unsigned int line,
@@ -84,6 +94,10 @@
                                  __func__,      \
                                  _msg_,         \
                                  ##__VA_ARGS__);
+
+
+    #define COW_VERIFY(_expr_) \
+        COW_ASSERT_ARGS(_expr_, "COW_VERIFY Failed - expression(%s)", #_expr_)
 
 #endif /* NDEBUG */
 

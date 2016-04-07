@@ -44,6 +44,7 @@
 #include "cowassert.h"
 #include "cowlog.h"
 #include "cowmalloc.h"
+#include "cowstr.h"
 /* std */
 #include <limits.h>
 #include <stdlib.h>
@@ -122,23 +123,6 @@ void cow_path_split(const char *path,
     strcpy(*tail_out, basename_str);
 }
 
-int find_safe(const char *str, char c)
-{
-    if(!str)
-        return -1;
-
-    char *p = strchr(str, c);
-    return (p) ? (p - str) : -1;
-}
-
-int rfind_safe(const char *str, char c)
-{
-    if(!str)
-        return -1;
-
-    char *p = strrchr(str, c);
-    return (p) ? (p - str) : -1;
-}
 
 int cow_path_splitext(const char *path,
                       char **root_out,
@@ -156,8 +140,8 @@ int cow_path_splitext(const char *path,
     *root_out = NULL;
     *ext_out  = NULL;
 
-    int first_dot_pos =  find_safe(tail, '.');
-    int last_dot_pos  = rfind_safe(tail, '.');
+    int first_dot_pos = cow_str_find_safe (tail, '.');
+    int last_dot_pos  = cow_str_rfind_safe(tail, '.');
 
     /* The path is only a directory part
        or the path doesn't  contains a dot (.)  */
@@ -177,7 +161,7 @@ int cow_path_splitext(const char *path,
 
     /* The path contains a filename with a dot
        let's find it on path */
-    int dot_pos = rfind_safe(path, '.');
+    int dot_pos = cow_str_rfind_safe(path, '.');
 
     /* Init the root_out */
     *root_out = COW_MALLOC(sizeof(char) * dot_pos + 1);

@@ -59,8 +59,9 @@ obj:
 bin:
 	mkdir -p ./bin
 
-	cpp -E -std=c++11 -D AMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED \
-	                     -I./include/                            \
-	                     ./src/*.c                               \
-	                     ./test/*.c                              \
-	                     -o ./bin/test
+	gcc -g                                           \
+	    -DAMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED \
+	    -I./include/                                 \
+	    ./src/*.c                                    \
+	    ./test/*.c                                   \
+	    -o ./bin/test

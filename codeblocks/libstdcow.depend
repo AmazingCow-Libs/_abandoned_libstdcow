@@ -26,10 +26,11 @@
 	<stdlib.h>
 	<string.h>
 
-1459582084 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/cowlog.c
+1459807241 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/cowlog.c
 	"cowlog.h"
 	<stdlib.h>
 	<stdarg.h>
+	<string.h>
 
 1459770571 source:/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/src/cowpath.c
 	"cowpath.h"
@@ -107,4 +108,13 @@
 1459771642 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/stdcow.h
 
 1459783759 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Tools/Bin2Header/lib/libstdcow/include/cowpath.h
+
+1460004837 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/include/cowassert.h
+
+1459807241 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/include/cowmalloc.h
+	<stdlib.h>
+	"cowassert.h"
+
+1459807241 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Libs/libstdcow/include/cowlog.h
+	<stdio.h>
 

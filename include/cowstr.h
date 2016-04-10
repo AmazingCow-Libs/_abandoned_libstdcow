@@ -47,6 +47,6 @@ int cow_str_find_safe(const char *str, char c);
 
 /* rfind */
 int cow_str_rfind(const char *str, char c);
-int cow_str_rfind_safe(const char *str, char c)
+int cow_str_rfind_safe(const char *str, char c);
 
 #endif /* __libstdcow_include_cowstr_h__ */

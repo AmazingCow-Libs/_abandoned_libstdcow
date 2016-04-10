@@ -1,6 +1,6 @@
 *.o
-./bin
-./obj
+bin/
+obj/
 ./codeblocks/bin
 ./codeblocks/obj
 codeblocks/bin/*

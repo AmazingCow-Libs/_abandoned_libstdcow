@@ -56,11 +56,22 @@
 
 int main(int argc, const char * argv[])
 {
+    (void)argc;
+    (void)argv;
+
+    // #ifdef NDEBUG
     int a = 10;
-    int b = 5;
+    int b = 11;
 
-    COW_VERIFY(a == b);
+    // COW_ASSERT(0, "This should be abort on non NDEBUG");
+    // COW_VERIFY(a == b);
 
+
+    // COW_LOG("ALWAYS");
+    // COW_DLOG("Only in debug");
+
+
+    // #endif
     return 0;
 }
 

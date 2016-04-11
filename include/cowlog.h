@@ -53,19 +53,21 @@ void _cow_log(FILE *f, int flush,
 /* Macro Definitions */
 #define COW_LOG(_fmt_, ...)                  \
     _cow_log(stdout, 1,                      \
-             "cowlog", _fmt_, ##__VA_ARGS__)
+             "cowlog", (_fmt_), ##__VA_ARGS__)
 
 #define COW_PRINT(_fmt_, ...) \
-    _cow_log(stdout, 1, NULL, _fmt_, ##__VA_ARGS__)
+    _cow_log(stdout, 1, NULL, (_fmt_), ##__VA_ARGS__)
+
+
 
 #ifdef _NDEBUG
-    #define COW_DLOG (void)0
+    #define COW_DLOG(_fmt_, ...) do {} while(0)
 
 #else
     /* Macro Definitions */
-    #define COW_DLOG(_fmt_, ...)                  \
-        _cow_log(stdout, 1,                       \
-                 "cowdebuglog", _fmt_, ##__VA_ARGS__)
+    #define COW_DLOG(_fmt_, ...)                        \
+        _cow_log(stdout, 1,                             \
+                 "cowdebuglog",( _fmt_), ##__VA_ARGS__)
 
 #endif /* _NDEBUG */
 

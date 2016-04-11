@@ -60,7 +60,7 @@ void _cow_log(FILE *f, int flush,
 
 
 
-#ifdef _NDEBUG
+#ifdef NDEBUG
     #define COW_DLOG(_fmt_, ...) do {} while(0)
 
 #else
@@ -69,6 +69,6 @@ void _cow_log(FILE *f, int flush,
         _cow_log(stdout, 1,                             \
                  "cowdebuglog",( _fmt_), ##__VA_ARGS__)
 
-#endif /* _NDEBUG */
+#endif /* NDEBUG */
 
 #endif /* __libstdcow_include_cowlog_h__ */

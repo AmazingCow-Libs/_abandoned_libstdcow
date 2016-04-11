@@ -50,14 +50,16 @@
     Kenny Kerr - @kennykerr - PluralSight Modern C++ Libraries.
 */
 
-
 /*******************************************************************************
 * Macros                                                                       *
 *******************************************************************************/
 /* NDEBUG is defined - We're on RELEASE mode. */
 #ifdef NDEBUG
-    #define COW_ASSERT(_cond_, _msg_) do {} while(0);
-    #define COW_VERIFY(_expr_) (_expr_)
+    #define COW_ASSERT(_cond_, _msg_) do {} while(0)
+    #define COW_ASSERT_ARGS(_cond_, _msg_, ...) do {} while(0)
+
+    #define COW_VERIFY(_expr_) ((_expr_))
+
 
 /* NDEBUG is not defined - We're on DEBUG mode. */
 #else
@@ -77,27 +79,29 @@
 
     /* Macro definition */
     #define COW_ASSERT(_cond_, _msg_) \
-        (_cond_)                      \
+        ((_cond_))                    \
         ? (void) 0                    \
         : _cow_assert_print(#_cond_,  \
                             __FILE__, \
                             __LINE__, \
                             __func__, \
-                            _msg_);
+                            (_msg_));
 
     #define COW_ASSERT_ARGS(_cond_, _msg_, ...) \
-        (_cond_)                                \
+        ((_cond_))                              \
         ? (void) 0                              \
         : _cow_assert_print_args(#_cond_,       \
                                  __FILE__,      \
                                  __LINE__,      \
                                  __func__,      \
-                                 _msg_,         \
-                                 ##__VA_ARGS__);
+                                 (_msg_),       \
+                                 ##__VA_ARGS__)
 
 
-    #define COW_VERIFY(_expr_) \
-        COW_ASSERT_ARGS(_expr_, "COW_VERIFY Failed - expression(%s)", #_expr_)
+    #define COW_VERIFY(_expr_)                                \
+        COW_ASSERT_ARGS((_expr_),                             \
+                        "COW_VERIFY Failed - expression(%s)", \
+                        #_expr_)
 
 #endif /* NDEBUG */
 

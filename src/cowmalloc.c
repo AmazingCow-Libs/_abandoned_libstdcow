@@ -38,6 +38,9 @@
 **                                  Enjoy :)                                  **
 **----------------------------------------------------------------------------*/
 
+/* This source is meant to compiled only in DEBUG builds (!NDEBUG) */
+#ifndef NDEBUG
+
 /* Header */
 #include "cowmalloc.h"
 /* std */
@@ -58,3 +61,5 @@ void* _cow_malloc(size_t size)
 
     return mem;
 }
+
+#endif /* NDEBUG */

@@ -38,6 +38,10 @@
 **                                  Enjoy :)                                  **
 **----------------------------------------------------------------------------*/
 
+
+/* This source is meant to compiled only in DEBUG builds (!NDEBUG) */
+#ifndef NDEBUG
+
 /* Header */
 #include "cowassert.h"
 /* std */
@@ -53,13 +57,18 @@ void _cow_assert_print(const char  *expr,
                        const char  *func,
                        const char  *msg)
 {
-    _cow_assert_print_args(expr, file, line, func, msg);
+    _cow_assert_print_args(expr,
+                           file,
+                           line,
+                           func,
+                           msg);
 }
 
-void _cow_assert_print_args(const char  *expr,
-                            const char  *file,
+
+void _cow_assert_print_args(const char   *expr,
+                            const char   *file,
                             unsigned int line,
-                            const char  *func,
+                            const char   *func,
                             const char   *msg,
                             ...)
 {
@@ -88,3 +97,4 @@ void _cow_assert_print_args(const char  *expr,
     abort();
 }
 
+#endif /* NDEBUG */

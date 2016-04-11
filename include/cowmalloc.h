@@ -51,14 +51,15 @@
 * malloc                                                                       *
 *******************************************************************************/
 #ifdef NDEBUG
-    #define COW_MALLOC(_size_) malloc(_size_);
+    #define COW_MALLOC(_size_) malloc((_size_))
+
 #else
     /* Function Prototypes */
     void* _cow_malloc(size_t size);
 
     /* Macros Definitions */
     #define COW_MALLOC(_size_) \
-        _cow_malloc(_size_);
+        _cow_malloc((_size_))
 
 #endif /* NDEBUG */
 
@@ -68,22 +69,22 @@
 *******************************************************************************/
 #define COW_FREE_NULL(_ptr_)                                \
     do {                                                    \
-        COW_ASSERT_ARGS(_ptr_ != NULL,                      \
+        COW_ASSERT_ARGS((_ptr_) != NULL,                      \
                         "Trying to free a null ptr (0x%x)", \
-                        &_ptr_);                            \
-        free(_ptr_);                                        \
-        _ptr_ = NULL;                                       \
-    } while(0);
+                        &(_ptr_));                            \
+        free((_ptr_));                                        \
+        (_ptr_) = NULL;                                       \
+    } while(0)
 
 
 #define COW_SAFE_FREE_NULL(_ptr_) \
     do {                          \
-        if(_ptr_)                 \
+        if((_ptr_))                 \
         {                         \
-            free(_ptr_);          \
-            _ptr_ = NULL;         \
+            free((_ptr_));          \
+            (_ptr_) = NULL;         \
         }                         \
-    } while(0);
+    } while(0)
 
 
 #endif /* __libstdcow_include_cowmalloc_h__ */

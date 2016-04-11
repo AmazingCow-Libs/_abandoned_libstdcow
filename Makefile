@@ -47,8 +47,7 @@
 
 ## COWTODO: This vars **ARE VERY SHIT** - Get a make book and study
 ## COWNOTE: Does the jobs - Is not the correct way but...
-## Vars ##
-NDEBUG            = -DNDEBUG
+fNDEBUG            = -DNDEBUG
 STDCOWTESTENABLED = -DAMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED
 INCLUDE           = -I./include/
 SRC               = ./src

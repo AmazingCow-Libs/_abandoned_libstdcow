@@ -38,6 +38,24 @@
 ##                                  Enjoy :)                                  ##
 ##----------------------------------------------------------------------------##
 
+#################################################################################
+## COWTODO: Note to myself:                                                    \
+##			The projects are getting bigger and my make stills is very limited \
+## 	        Get a book quickly and study make :O - NOWWWW.
+################################################################################
+
+
+## COWTODO: This vars **ARE VERY SHIT** - Get a make book and study
+## COWNOTE: Does the jobs - Is not the correct way but...
+## Vars ##
+NDEBUG            = -DNDEBUG
+STDCOWTESTENABLED = -DAMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED
+INCLUDE           = -I./include/
+SRC               = ./src
+TESTSRC           = ./test
+
+CC 	= gcc $(NONSTRIPPED) $(NDEBUG) $(INCLUDE)
+
 #Create the object files and the executable test
 all: obj bin
 
@@ -50,8 +68,7 @@ clean:
 obj:
 	mkdir -p ./obj
 
-	gcc -c -I./include/ \
-	        src/*.c
+	$(CC) -c ./src/*.c
 
 	mv *.o ./obj/
 
@@ -59,9 +76,4 @@ obj:
 bin:
 	mkdir -p ./bin
 
-	gcc -g                                           \
-	    -DAMAZINGCOW_LIBSTDCOW_SHOWCASE_TEST_ENABLED \
-	    -I./include/                                 \
-	    ./src/*.c                                    \
-	    ./test/*.c                                   \
-	    -o ./bin/test
+	$(CC) $(STDCOWTESTENABLED) $(SRC)/*.c $(TESTSRC)/*.c  -o ./bin/test

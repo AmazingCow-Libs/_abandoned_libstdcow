@@ -156,7 +156,7 @@ int cow_path_splitext(const char *path,
 
         return -1;
     }
-    COW_SAFE_FREE_NULL(tail) /* We don't need tail anymore */
+    COW_SAFE_FREE_NULL(tail); /* We don't need tail anymore */
 
 
     /* The path contains a filename with a dot

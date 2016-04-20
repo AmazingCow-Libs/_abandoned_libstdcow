@@ -68,3 +68,19 @@ int cow_str_rfind_safe(const char *str, char c)
     if(!str) return -1;
     return cow_str_find(str, c);
 }
+
+/* count */
+int cow_str_count(const char *str, char c)
+{
+    int count = 0;
+    for(char *p = (char *)str; *p != '\0'; ++p)
+    {
+        if(*p == c) ++count;
+    }
+    return count;
+}
+int cow_str_count_safe(const char *str, char c)
+{
+    if(!str) return 0;
+    return cow_str_count(str, c);
+}

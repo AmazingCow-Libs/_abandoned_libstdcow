@@ -181,6 +181,157 @@ char* cow_path_expanduser(const char *path)
 }
 
 
+char* cow_path_abspath(const char *path)
+{
+    COW_ASSERT(path != NULL, "path cannot be NULL");
+
+    /* Already is absolute */
+    if(cow_path_isabs(path))
+    {
+        char *fullpath = COW_MALLOC(sizeof(char) * strlen(path) + 1);
+        strcpy(fullpath, path);
+        return fullpath;
+    }
+
+    /* Let the getcwd allocate the memory */
+    char *cwd = getcwd(NULL, 0);
+
+    int start_offset = (path[0] == '/') ? 1 : 0;
+    int end_offset   = (path[strlen(path) -1] == '/') ? 1 : 0;
+
+    /* Easy typing... */
+    int cwd_len      = strlen(cwd);
+    int path_len     = strlen(path);
+    int fullpath_len = cwd_len + path_len + 1; /* 1 for the slash */
+    /* Size without the slashes in path */
+    fullpath_len -= (start_offset + end_offset);
+
+    char *fullpath = COW_MALLOC(sizeof(char) * fullpath_len + 1);
+
+    /* head of path */
+    memcpy(fullpath, cwd, cwd_len);
+    /* slash */
+    memcpy(fullpath + cwd_len, "/", 1);
+    /* tail of path */
+    memcpy(fullpath + cwd_len + 1, /* Skip the slash added above      */
+           path + start_offset,    /* Skip the leading slash in path  */
+           path_len - end_offset); /* Skip the trailing slash in path */
+
+    fullpath[fullpath_len] = '\0';
+
+    COW_FREE_NULL(cwd);
+
+    char *normalized_fullpath = cow_path_normpath(fullpath);
+    COW_FREE_NULL(fullpath);
+
+    return normalized_fullpath;
+}
+
+
+char* cow_path_normpath(const char *path)
+{
+    COW_ASSERT(path != NULL, "path cannot be NULL");
+
+    /* Empty string - Dot path */
+    if(strlen(path) == 0)
+        return strdup(".");
+
+    int slash_count = cow_str_count(path, '/');
+    int path_started_with_slash = (path[0] == '/');
+
+    /* There is no slashes - Return the path itself */
+    if(slash_count == 0)
+        return strdup(path);
+
+    char comps_arr[slash_count][PATH_MAX / slash_count];
+    int  comp_index = 0;
+
+    /* Reset all the compoments - Prevent junk on them */
+    for(int i = 0; i < slash_count; ++i)
+        memset(comps_arr[i], 0, PATH_MAX / slash_count);
+
+
+    char *search_path = strdup(path);
+    char *strtok_str  = search_path; /* Used only to ease the while loop */
+    char *token       = NULL;        /* The path piece */
+
+    while((token = strtok(strtok_str, "/")))
+    {
+        strtok_str = NULL;
+        if(strcmp(token, ".") == 0)
+        {
+            /* Do nothing */
+        }
+        else if(strcmp(token, "..") == 0)
+        {
+            /* Go back in the comps_arr */
+            --comp_index;
+            if(comp_index < 0) /* Make it remain on bounds */
+                comp_index = 0;
+
+            /* But if we already on top we must let the .. */
+            if(comp_index == 0)
+                strcpy(comps_arr[comp_index++], token);
+            /* Reset the value so strcat can operate correctly */
+            else
+                comps_arr[comp_index][0] = '\0';
+        }
+        else
+        {
+            strcpy(comps_arr[comp_index++], token);
+        }
+    }
+    COW_FREE_NULL(search_path);
+
+
+    /* The comp_index didn't increase, it means that all components
+       were "gobacked" by the "../" or the path has only "./" or
+       there is no compoment at all (only a slash)
+    */
+    if(comp_index == 0 && !path_started_with_slash)
+        return strdup(".");
+    else if(comp_index == 0 && path_started_with_slash)
+        return strdup("/");
+
+
+    /* The comp_index is the count relevant path pieces. i.e. the path
+       pieces that aren't "gobacked" by the "../" or is the "./"
+       Now we need join them up into one string
+    */
+    int normalized_path_len = (path_started_with_slash) ? 1 : 0;
+
+    /* Find the length of all path pieces together */
+    for(int i = 0; i < comp_index; ++i)
+        normalized_path_len  += strlen(comps_arr[i]) + 1; /* +1 for the slashes */
+
+    /* Join them */
+    char *normalized_path = COW_MALLOC(sizeof(char) * normalized_path_len + 1);
+    memset(normalized_path, 0, normalized_path_len); /* Prevent junk */
+
+    if(path_started_with_slash)
+        strcat(normalized_path, "/");
+
+    for(int i = 0; i < comp_index; ++i)
+    {
+        strcat(normalized_path , comps_arr[i]);
+        if(i != comp_index -1) /* As in python, don't put trailling slash */
+            strcat(normalized_path , "/");
+    }
+
+    return normalized_path;
+}
+
+
+char* cow_path_canonizepath(const char *path)
+{
+    char *expanded = cow_path_expanduser(path);
+    char *abs      = cow_path_abspath(expanded);
+
+    COW_FREE_NULL(expanded);
+    return abs;
+}
+
+
 void cow_path_split(const char *path,
                     char **head_out,
                     char **tail_out)

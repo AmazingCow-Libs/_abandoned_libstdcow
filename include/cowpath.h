@@ -67,6 +67,37 @@ int cow_path_isabs(const char *path);
 */
 char* cow_path_expanduser(const char *path);
 
+
+/*
+    From pydoc os.path.isabs:
+    Return an absolute path.
+
+    cow_path_abspath:
+    Return pointer is ALWAYS allocated with malloc(3).
+
+    Memory:
+    The pointers are allocated with malloc(3) - Callers are responsible to
+    free(3) them.
+*/
+char* cow_path_abspath(const char *path);
+
+
+char* cow_path_canonizepath(const char *path);
+
+/*
+    From pydoc os.path.normpath:
+    Normalize path, eliminating double slashes, etc.
+
+    cow_path_abspath:
+    Return pointer is ALWAYS allocated with malloc(3).
+
+    Memory:
+    The pointers are allocated with malloc(3) - Callers are responsible to
+    free(3) them.
+*/
+char* cow_path_normpath(const char *path);
+
+
 /*
     From pydoc os.path.split:
     Split a pathname.  Returns tuple "(head, tail)" where "tail" is

@@ -43,6 +43,31 @@
 
 
 /*
+    From pydoc os.path.isabs:
+    Test whether a path is absolute
+
+    cow_path_isabs:
+    Return non zero if path is absolute, zero otherwise.
+*/
+int cow_path_isabs(const char *path);
+
+
+/*
+    From pydoc os.path.isabs:
+    Expand ~ and ~user constructions.  If user or $HOME is unknown,
+    do nothing.
+
+    cow_path_expanduser:
+    Return pointer is ALWAYS allocated with malloc(3), even if path
+    is already expanded or cannot be expanded.
+
+    Memory:
+    The pointers are allocated with malloc(3) - Callers are responsible to
+    free(3) them.
+*/
+char* cow_path_expanduser(const char *path);
+
+/*
     From pydoc os.path.split:
     Split a pathname.  Returns tuple "(head, tail)" where "tail" is
     everything after the final slash.  Either part may be empty.

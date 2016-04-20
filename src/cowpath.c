@@ -40,16 +40,18 @@
 
 /* Header */
 #include "cowpath.h"
-/* stdcow */
-#include "cowassert.h"
-#include "cowlog.h"
-#include "cowmalloc.h"
-#include "cowstr.h"
 /* std */
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#include <unistd.h>
+#include <pwd.h>
+/* stdcow */
+#include "cowassert.h"
+#include "cowlog.h"
+#include "cowmalloc.h"
+#include "cowstr.h"
 
 /*******************************************************************************
 * NOTES                                                                        *
@@ -65,6 +67,118 @@
 *
 ********************************************************************************
 *******************************************************************************/
+
+
+
+/*******************************************************************************
+* Function implementations                                                     *
+*******************************************************************************/
+int cow_path_isabs(const char *path)
+{
+    COW_ASSERT(path != NULL, "path cannot be NULL");
+    return path[0] == '/';
+}
+
+
+char* cow_path_expanduser(const char *path)
+{
+    COW_ASSERT(path != NULL, "path cannot be NULL");
+
+    char *expanded_path = NULL;
+
+    /* Not start with tilde so do not expand it. */
+    if(path[0] != '~')
+    {
+        expanded_path = COW_MALLOC(sizeof(char) * strlen(path) + 1);
+        strcpy(expanded_path, path);
+
+        return expanded_path;
+    }
+
+    /*
+        Basically we have two options here for path:
+            #1 - Start with [tilde] and may have tralling components.
+            #2 - Start with [tilde][user] and may have tralling components.
+
+        We must note that the #1 is the same of #2 with the [user] implied
+        for the current proccess.
+
+        For example:
+            #1 - ~/Desktop
+          ` #2 - ~n2omatt/Desktop
+        Is the same for this function if the current user is n2omatt.
+
+        So we have all these possibilities:
+            [1] ~
+            [2] ~/
+            [3] ~/path
+            [4] ~/path/
+            [5] ~user
+            [6] ~user/
+            [7] ~user/path
+            [8] ~user/path/
+    */
+
+    int slash_index = cow_str_find_safe(path, '/');
+    if(slash_index == -1)
+        slash_index = strlen(path);
+
+    char *user_home = NULL;
+
+    /* Check if fall in the [1-4] of above category */
+    if(slash_index == 0 || slash_index == 1)
+    {
+        user_home = getenv("HOME");
+    }
+
+    /* We are at category [5-8] - Get the user from given path */
+    if(!user_home)
+    {
+        /* We don't +1 in malloc because we're skipping the first char */
+        char *user_name = COW_MALLOC(sizeof(char) * slash_index);
+        memcpy(user_name, path+1, slash_index -1);
+        user_name[slash_index -1] = '\0';
+
+        struct passwd *pwd = getpwnam(user_name);
+        if(pwd) /* User exists */
+            user_home = pwd->pw_dir;
+
+        COW_SAFE_FREE_NULL(user_name);
+    }
+
+    /* Here if user_home is NULL means that the HOME is not set
+       or desired user doesn't exists - Return the same value from path. */
+    if(!user_home)
+    {
+        expanded_path = COW_MALLOC(sizeof(char) * strlen(path) + 1);
+        strcpy(expanded_path, path);
+
+        return expanded_path;
+    }
+
+    /* Easy the typing */
+    int user_home_len      = strlen(user_home);
+    int path_wo_user_start = slash_index;
+    int path_wo_user_len   = strlen(path) - path_wo_user_start;
+    int expanded_path_len  = user_home_len + path_wo_user_len + 1;
+
+    /* Buffer long enough to /home/user/ + /whatever/comes/afer/ */
+    expanded_path = COW_MALLOC(sizeof(char) * expanded_path_len);
+
+    /* Copy the user home */
+    memcpy(expanded_path,
+           user_home,
+           user_home_len);
+    /* Copy the rest of path - It will come with the leading slash */
+    memcpy(expanded_path + user_home_len,
+           path + path_wo_user_start,
+           path_wo_user_len);
+    /* Null char */
+    expanded_path[expanded_path_len -1] = '\0';
+
+
+    return expanded_path;
+}
 
 
 void cow_path_split(const char *path,

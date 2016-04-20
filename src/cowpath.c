@@ -188,8 +188,7 @@ char* cow_path_abspath(const char *path)
     /* Already is absolute */
     if(cow_path_isabs(path))
     {
-        char *fullpath = COW_MALLOC(sizeof(char) * strlen(path) + 1);
-        strcpy(fullpath, path);
+        char *fullpath = cow_path_normpath(path);
         return fullpath;
     }
 
@@ -221,6 +220,7 @@ char* cow_path_abspath(const char *path)
 
     COW_FREE_NULL(cwd);
 
+    /* Normalize the path */
     char *normalized_fullpath = cow_path_normpath(fullpath);
     COW_FREE_NULL(fullpath);
 

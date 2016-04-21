@@ -8,6 +8,7 @@
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/libstdcow" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../../../../../Desktop" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -25,6 +26,7 @@
 		<Unit filename="../include/cowlog.h" />
 		<Unit filename="../include/cowmalloc.h" />
 		<Unit filename="../include/cowpath.h" />
+		<Unit filename="../include/cowstr.h" />
 		<Unit filename="../include/stdcow.h" />
 		<Unit filename="../src/cowassert.c">
 			<Option compilerVar="CC" />
@@ -36,6 +38,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/cowpath.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/cowstr.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/stdcow.c">

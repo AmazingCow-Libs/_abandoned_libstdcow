@@ -46,17 +46,48 @@
 
 
 /* Function Prototypes */
+/**
+@brief this is what log macros will call.
+@warning DO NOT CALL IT DIRECTLY.
+@see COW_LOG, COW_PRINT, COW_DLOG
+*/
 void _cow_log(FILE *f, int flush,
               const char *prefix, const char *fmt, ...);
 
 
 /* Macro Definitions */
+/**
+@brief
+    It will act like a printf(3), flushing the stdout after print the message. \n
+    COW_LOG will put a cowlog: before the message. \n
+    COW_LOG is enabled regardless of build mode.
+@param
+    fmt - The format string - Like printf(3).
+@param
+    ... - Variadic arguments list - Like printf(3).
+@see
+    COW_PRINT, COW_DLOG
+*/
 #define COW_LOG(_fmt_, ...)                  \
     _cow_log(stdout, 1,                      \
              "cowlog", (_fmt_), ##__VA_ARGS__)
 
+
+/**
+@brief
+    It will act like a printf(3), flushing the stdout after print the message. \n
+    Unlike COW_LOG, this macro will not put anything before the message. \n
+    COW_PRINT is enabled regardless of build mode.
+@param
+    fmt - The format string - Like printf(3).
+@param
+    ... - Variadic arguments list - Like printf(3).
+@see
+    COW_LOG, COW_DLOG
+*/
 #define COW_PRINT(_fmt_, ...) \
     _cow_log(stdout, 1, NULL, (_fmt_), ##__VA_ARGS__)
+
 
 
 
@@ -65,6 +96,18 @@ void _cow_log(FILE *f, int flush,
 
 #else
     /* Macro Definitions */
+    /**
+    @brief
+        It will act like a printf(3), flushing the stdout after print the message. \n
+        COW_DLOG will put a cowdebuglog: before the message. \n
+        COW_DLOG is enabled only in non NDEBUG builds.
+    @param
+        fmt - The format string - Like printf(3).
+    @param
+        ... - Variadic arguments list - Like printf(3).
+    @see
+        COW_LOG, COW_PRINT
+*/
     #define COW_DLOG(_fmt_, ...)                        \
         _cow_log(stdout, 1,                             \
                  "cowdebuglog",( _fmt_), ##__VA_ARGS__)

@@ -42,94 +42,147 @@
 #define __libstdcow_include_cowpath_h__
 
 
-/*
-    From pydoc os.path.isabs:
+/**
+@brief
+    From pydoc os.path.isabs: \n
     Test whether a path is absolute
-
-    cow_path_isabs:
-    Return non zero if path is absolute, zero otherwise.
+@param
+    path - Non NULL pointer to a string.
+@returns
+    Non zero value if path is absolute, zero value otherwise.
 */
 int cow_path_isabs(const char *path);
 
 
-/*
-    From pydoc os.path.isabs:
-    Expand ~ and ~user constructions.  If user or $HOME is unknown,
+/**
+@brief
+    From pydoc os.path.expanduser: \n
+    Expand ~ and ~user constructions. If user or $HOME is unknown,
     do nothing.
-
-    cow_path_expanduser:
-    Return pointer is ALWAYS allocated with malloc(3), even if path
-    is already expanded or cannot be expanded.
-
-    Memory:
-    The pointers are allocated with malloc(3) - Callers are responsible to
-    free(3) them.
+@param
+    path - Non NULL pointer to a string.
+@returns
+    A pointer to string allocated with malloc(3). \n
+    If path could be expanded the return pointer will contains the expanded
+    path, otherwise it will contains the original path given as argument.
+@warning
+    The return pointer is ALWAYS allocated with malloc(3), even if path
+    is already expanded or cannot be expanded. \n
+    Users are responsible to free(3) it.
 */
 char* cow_path_expanduser(const char *path);
 
 
-/*
-    From pydoc os.path.isabs:
+/**
+@brief
+    From pydoc os.path.abspath: \n
     Return an absolute path.
-
-    cow_path_abspath:
-    Return pointer is ALWAYS allocated with malloc(3).
-
-    Memory:
-    The pointers are allocated with malloc(3) - Callers are responsible to
-    free(3) them.
+@param
+    path - Non NULL pointer to a string.
+@returns
+    A pointer to string allocated with malloc(3). \n
+    The absolute path.
+@warning
+    The return pointer is ALWAYS allocated with malloc(3), even if path
+    is already absolute. \n
+    Users are responsible to free(3) it.
 */
 char* cow_path_abspath(const char *path);
 
 
+/**
+@brief
+    Canonize the path, i.e. expanduser + abspath + normpath in
+    one call.
+@param
+    path - Non NULL pointer to a string.
+@returns
+    A pointer to string allocated with malloc(3). \n
+    The canonized path.
+@warning
+    The return pointer is ALWAYS allocated with malloc(3), even if path
+    is already canonized. \n
+    Users are responsible to free(3) it.
+*/
 char* cow_path_canonizepath(const char *path);
 
-/*
-    From pydoc os.path.normpath:
+
+/**
+@brief
+    From pydoc os.path.normpath: \n
     Normalize path, eliminating double slashes, etc.
-
-    cow_path_abspath:
-    Return pointer is ALWAYS allocated with malloc(3).
-
-    Memory:
-    The pointers are allocated with malloc(3) - Callers are responsible to
-    free(3) them.
+@param
+    path - Non NULL pointer to a string.
+@returns
+    A pointer to string allocated with malloc(3). \n
+    The normalized path.
+@warning
+    The return pointer is ALWAYS allocated with malloc(3), even if path
+    is already normalized. \n
+    Users are responsible to free(3) it.
+@bug
+    This function DOES NOT behave like python's one. \n
+    It isn't aware of leading double or triple slashes.
 */
 char* cow_path_normpath(const char *path);
 
 
-/*
-    From pydoc os.path.split:
-    Split a pathname.  Returns tuple "(head, tail)" where "tail" is
-    everything after the final slash.  Either part may be empty.
-
-    cow_path_split:
+/**
+@brief
+    From pydoc os.path.split: \n
+    Split a pathname. Returns tuple "(head, tail)" where "tail" is
+    everything after the final slash. Either part may be empty. \n
+    \n
+    cow_path_split: \n
     Instead of a tuple, this function will set the pointers
     (head_out and tail_out) - Empty parts will be NULL.
-
-    Memory:
-    The pointers are allocated with malloc(3) - Callers are responsible to
-    free(3) them.
+@param
+    path     - Non NULL pointer to a string.
+@param
+    head_out - A pointer to a pointer to string - It will may be set
+               if path has a head component. \n
+               If set it will be allocated with malloc(3), otherwise will be NULL.
+@param
+    tail_out - A pointer to a pointer to string - It will may be set
+               if path has a tail component. \n
+               If set it will be allocated with malloc(3), otherwise will be NULL.
+@warning
+    The head_out and tail_out if exists, are allocated with malloc(3), users
+    are responsible to free(3) them.
+@see
+    COW_SAFE_FREE_NULL
 */
 void cow_path_split(const char *path,
                     char **head_out,
                     char **tail_out);
 
 
-/*
-    From pydoc os.path.splitext:
-    Split the extension from a pathname.
-
+/**
+@brief
+    From pydoc os.path.splitext: \n
+    Split the extension from a pathname. \n
+    \n
     Extension is everything from the last dot to the end, ignoring
-    leading dots.  Returns "(root, ext)"; ext may be empty.
-
+    leading dots. Returns "(root, ext)"; ext may be empty.
+    \n
     cow_path_splitext:
     Instead of a tuple this function will set the pointers (root_out, ext_out).
     ext_out may be NULL to indicate that it's empty.
-
-    Memory:
-    The pointers are allocated with malloc(3) - Callers are responsible to
-    free(3) them.
+@param
+    path     - Non NULL pointer to a string.
+@param
+    root_out - A pointer to a pointer to string - It will may be set
+               if path has a root component. \n
+               It will be allocated with malloc(3).
+@param
+    ext_out - A pointer to a pointer to string - It will may be set
+              if path has a ext component. \n
+              If set it will be allocated with malloc(3), otherwise will be NULL.
+@warning
+    The ext_out if exists, is allocated with malloc(3), users
+    are responsible to free(3) them.
+@see
+    COW_SAFE_FREE_NULL
 */
 int cow_path_splitext(const char *path,
                       char **root_out,

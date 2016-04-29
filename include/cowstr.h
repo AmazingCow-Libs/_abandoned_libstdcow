@@ -41,16 +41,118 @@
 #ifndef __libstdcow_include_cowstr_h__
 #define __libstdcow_include_cowstr_h__
 
-/* find */
+/*******************************************************************************
+* find                                                                         *
+*******************************************************************************/
+/**
+@brief
+    Finds the target char c in the string - From left to right.
+@param
+    str - A non NULL pointer to string.
+@param
+    c - A char that will be searched in the string.
+@returns
+    The index of char in the string or -1 if it was not found.
+@warning
+    This function will not check the validity of str pointer. \n
+    If the pointer could be NULL is better use the cow_str_find_safe.
+@see
+    cow_str_find_safe, cow_str_rfind, cow_str_rfind_safe
+*/
 int cow_str_find(const char *str, char c);
+
+/**
+@brief
+    Finds the target char c in the string - From left to right. \n
+    This function will handle the NULL str pointer, so is safe pass
+    pointer that could be NULL to it.
+@param
+    str - A pointer to string.
+@param
+    c - A char that will be searched in the string.
+@returns
+    The index of char in the string or -1 if it was not found. \n
+    If the str pointer is NULL it will return -1.
+@see
+    cow_str_find, cow_str_rfind, cow_str_rfind_safe
+*/
 int cow_str_find_safe(const char *str, char c);
 
-/* rfind */
+
+/*******************************************************************************
+* rfind                                                                        *
+*******************************************************************************/
+/**
+@brief
+    Finds the target char c in the string - From right to left.
+@param
+    str - A non NULL pointer to string.
+@param
+    c - A char that will be searched in the string.
+@returns
+    The index of char in the string or -1 if it was not found.
+@warning
+    This function will not check the validity of str pointer. \n
+    If the pointer could be NULL is better use the cow_str_rfind_safe.
+@see
+    cow_str_find, cow_str_find_safe, cow_str_rfind_safe
+*/
 int cow_str_rfind(const char *str, char c);
+
+/**
+@brief
+    Finds the target char c in the string - From right to left. \n
+    This function will handle the NULL str pointer, so is safe pass
+    pointer that could be NULL to it.
+@param
+    str - A pointer to string.
+@param
+    c - A char that will be searched in the string.
+@returns
+    The index of char in the string or -1 if it was not found. \n
+    If the str pointer is NULL it will return -1.
+@see
+    cow_str_find, cow_str_find_safe, cow_str_rfind
+*/
 int cow_str_rfind_safe(const char *str, char c);
 
 
-/* count */
+/*******************************************************************************
+* count                                                                        *
+*******************************************************************************/
+/**
+@brief
+    Counts how many times the target char c is in the string \n
+@param
+    str - A pointer to string.
+@param
+    c - A char that will be searched in the string.
+@returns
+    How many times c was found in str. \n
+@warning
+    This function will not check the validity of str pointer. \n
+    If the pointer could be NULL is better use the cow_str_count_safe.
+@see
+    cow_str_count_safe.
+*/
 int cow_str_count(const char *str, char c);
+
+/**
+@brief
+    Counts how many times the target char c is in the string \n
+    This function will handle the NULL str pointer, so is safe pass
+    pointer that could be NULL to it.
+@param
+    str - A pointer to string.
+@param
+    c - A char that will be searched in the string.
+@returns
+    How many times c was found in str. \n
+    If the str pointer is NULL it will return 0.
+@see
+    cow_str_count.
+*/
 int cow_str_count_safe(const char *str, char c);
+
+
 #endif /* __libstdcow_include_cowstr_h__ */

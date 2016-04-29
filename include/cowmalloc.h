@@ -55,9 +55,24 @@
 
 #else
     /* Function Prototypes */
+    /** @brief DO NOT CALL IT DIRECTLY
+        @warning DO NOT CALL IT DIRECTLY
+        @see COW_MALLOC
+    */
     void* _cow_malloc(size_t size);
 
     /* Macros Definitions */
+    /**
+    @brief
+        "Safe" version of malloc(3). \n
+        In non NDEBUG builds it will check the allocated memory and
+        initialize it wil the 'C' char. \n
+        In NDEBUG builds it's a placeholder for malloc(3).
+    @param
+        size - The size of memory to allocate.
+    @return
+        A chunk of memory like malloc(3).
+    */
     #define COW_MALLOC(_size_) \
         _cow_malloc((_size_))
 
@@ -67,6 +82,15 @@
 /*******************************************************************************
 * free                                                                         *
 *******************************************************************************/
+/**
+@brief Safe version of free(3). \n
+       It will free(3) the pointer and after will set it as NULL. \n
+       In non NDEBUG builds it will check if the pointer is not already NULL.
+@param
+    ptr - The pointer the will be freed.
+@see
+    COW_SAFE_FREE_NULL
+*/
 #define COW_FREE_NULL(_ptr_)                                \
     do {                                                    \
         COW_ASSERT_ARGS((_ptr_) != NULL,                      \
@@ -77,6 +101,16 @@
     } while(0)
 
 
+/**
+@brief Safer version of free(3). \n
+       It will free(3) the pointer and after will set it as NULL. \n
+       COW_SAFE_FREE_NULL, will check if the pointer isn't already NULL,
+       before trying to free it.
+@param
+    ptr - The pointer the will be freed.
+@see
+    COW_FREE_NULL
+*/
 #define COW_SAFE_FREE_NULL(_ptr_) \
     do {                          \
         if((_ptr_))                 \

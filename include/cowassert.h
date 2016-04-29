@@ -64,12 +64,22 @@
 /* NDEBUG is not defined - We're on DEBUG mode. */
 #else
     /* Functions prototypes */
+    /** @brief This function is only declared for !NDEBUG, this is what
+        COW_ASSERT will call.
+        @warning DO NOT CALL IT DIRECTLY.
+        @see COW_ASSERT
+    */
     void _cow_assert_print(const char   *expr,
                            const char   *file,
                            unsigned int line,
                            const char   *func,
                            const char   *msg);
 
+    /** @brief This function is only declared for !NDEBUG, this is what
+        COW_ASSERT_ARGS will call.
+        @warning DO NOT CALL IT DIRECTLY.
+        @see COW_ASSERT_ARGS
+    */
     void _cow_assert_print_args(const char   *expr,
                                 const char   *file,
                                 unsigned int line,
@@ -78,6 +88,16 @@
                                 ...);
 
     /* Macro definition */
+    /**
+        @brief
+            A more informative assert than the standard assert.
+        @param
+            cond - The condition that will be asserted.
+        @param
+            msg - The message the will be printed along the other info.
+        @see
+            COW_ASSERT_ARGS, COW_VERIFY
+    */
     #define COW_ASSERT(_cond_, _msg_) \
         ((_cond_))                    \
         ? (void) 0                    \
@@ -87,6 +107,21 @@
                             __func__, \
                             (_msg_));
 
+    /**
+        @brief
+            A more informative assert than the standard assert.
+        @param
+            cond - The condition that will be asserted.
+        @param
+            msg - The message the will be printed along the other info. \n
+                  This can be used like a printf(3) format string.
+        @param
+            ... - variadic arguments list that will be used to build the final
+                  message. \n
+                  This is used like the printf(3) var args list.
+        @see
+            COW_ASSERT, COW_VERIFY
+    */
     #define COW_ASSERT_ARGS(_cond_, _msg_, ...) \
         ((_cond_))                              \
         ? (void) 0                              \
@@ -97,7 +132,21 @@
                                  (_msg_),       \
                                  ##__VA_ARGS__)
 
-
+    /**
+        @brief
+            Assert like macro that will behave like the assert in
+            non NDEBUG builds, but unlike the assert it WILL continue
+            doing the check in NDEBUG builds. \n
+            This is util in cases that we want an assert in debug, but
+            want that the expression being kept in the release builds.
+        @param
+            expr - The expression that will evaluated and will trigger the
+                   assert if false in debug build. \n
+                   Notice that it will be kept regardless if the build mode,
+                   but will only trigger the assert in non NDEBUG builds.
+        @see
+            COW_ASSERT, COW_ASSERT_ARGS
+    */
     #define COW_VERIFY(_expr_)                                \
         COW_ASSERT_ARGS((_expr_),                             \
                         "COW_VERIFY Failed - expression(%s)", \

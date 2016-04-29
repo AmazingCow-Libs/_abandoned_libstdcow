@@ -1,7 +1,7 @@
 /**
 @mainpage The libstdcow documentation.
 
-The ```libstdcow``` objective is to create a ease to use C library with
+The __libstdcow__ objective is to create a ease to use C library with
 the common day-to-day programming tasks made easy.
 
 We bring the inspiration from some other languages _standard libraries_,
@@ -17,5 +17,5 @@ You may find interesting take a look in:
 
 You are __very welcomed__ to __share__ and __hack__ it.
 
-Thank you and we hope that you enjoy __Termcolor_cpp__.
+Thank you and we hope that you enjoy __libstdcow__.
 */

@@ -85,9 +85,9 @@ As usual, you are **very welcomed** to **share** and **hack** it.
 We strive to make our source code fully documented.   
 While there are a myriad of comments, one might find useful take a look at:
 
-* [Doxygen Docs]()
-* [Project Website]()
-* [A list of blog posts about the project]()
+* [Doxygen Docs](http://opensource.amazingcow.com/libs/libstdcow/doxygen/)
+* [Project Website](http://opensource.amazingcow.com/libs/libstdcow/)
+* [A list of blog posts about the project](http://opensource.amazingcow.com/libs/libstdcow/posts/)
 
 
 

@@ -1,0 +1,21 @@
+/**
+@mainpage The libstdcow documentation.
+
+The ```libstdcow``` objective is to create a ease to use C library with
+the common day-to-day programming tasks made easy.
+
+We bring the inspiration from some other languages _standard libraries_,
+primarily python, but some Objective-C (Cocoa|Foundation) and some C# (.NET),
+can appears here and there.
+
+
+You may find interesting take a look in:
+
+- [Project Page](http://opensource.amazingcow.com/libs/libstdcow) \n
+- [Project GitHub](https://www.github.com/AmazingCow-Libs/libstdcow) \n
+- [AmazingCow Open Source Projects](http://opensource.amazingcow.com).
+
+You are __very welcomed__ to __share__ and __hack__ it.
+
+Thank you and we hope that you enjoy __Termcolor_cpp__.
+*/

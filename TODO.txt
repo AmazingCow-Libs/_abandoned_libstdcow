@@ -1,1 +1,5 @@
 #1 - Check the COWTODOs.
+
+--------------------------------------------------------------------------------
+Features:
+- What about cow_file_size() to get the size of file?

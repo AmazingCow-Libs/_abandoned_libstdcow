@@ -23,12 +23,16 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="../include/cowassert.h" />
+		<Unit filename="../include/cowfile.h" />
 		<Unit filename="../include/cowlog.h" />
 		<Unit filename="../include/cowmalloc.h" />
 		<Unit filename="../include/cowpath.h" />
 		<Unit filename="../include/cowstr.h" />
 		<Unit filename="../include/stdcow.h" />
 		<Unit filename="../src/cowassert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/cowfile.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/cowlog.c">

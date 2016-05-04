@@ -58,7 +58,8 @@ void _cow_log(FILE *f, int flush,
 /* Macro Definitions */
 /**
 @brief
-    It will act like a printf(3), flushing the stdout after print the message. \n
+    It will act like a printf(3), flushing the stdout after
+    print the message. \n
     COW_LOG will put a cowlog: before the message. \n
     COW_LOG is enabled regardless of build mode.
 @param
@@ -98,7 +99,8 @@ void _cow_log(FILE *f, int flush,
     /* Macro Definitions */
     /**
     @brief
-        It will act like a printf(3), flushing the stdout after print the message. \n
+        It will act like a printf(3), flushing the stdout after
+        print the message. \n
         COW_DLOG will put a cowdebuglog: before the message. \n
         COW_DLOG is enabled only in non NDEBUG builds.
     @param

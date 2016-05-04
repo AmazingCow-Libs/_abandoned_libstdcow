@@ -1,0 +1,25 @@
++------------------------------------------------------------------------------+
+| Version 0.0.x                                                                |
++------------------------------------------------------------------------------+
+v0.0.3 - May 4, 2016
+-- General --
+    - New README.
+    - [API]cow_file_size();
+    - Add doxygen stuff.
+
+-- Source --
+    include/cowfile.[h/c]
+        - Add cow_file_size() to easy get the of file.
+
+    include/cowlog.h
+        - Improve documention.
+
+-- Info Files --
+    README.md
+        - Rewrite the README to consistency with other
+          Amazing Cow's READMEs.
+
+-- Others --
+    Add the doxygen folder to gitignore.
+    [Codeblocks] - Update the ide status.
+    core - Remove unneeded file.

@@ -1,0 +1,11 @@
+Title:
+    libstdcow
+Description:
+    C library with the common day-to-day programming tasks made easy.
+URL:
+    Github, http://github.com/AmazingCow-Libs/libstdcow
+    Docs, http://docs.amazingcow.com/libstdcow
+Owner:
+    AmazingCow Labs
+Section:
+    Libs
